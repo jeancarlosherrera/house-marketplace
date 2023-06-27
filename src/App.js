@@ -5,6 +5,7 @@ import Profile from './pages/Profile'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import ForgotPassword from './pages/ForgotPassword'
+import Navbar from './layout/Navbar'
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
           <Route path='/sign-in' element={<SignIn />}></Route>
           <Route path='/forgot-password' element={<ForgotPassword />}></Route>
         </Routes>
-        {/* Navbar goes here */}
+        <Navbar />
       </Router>
     </>
   )
