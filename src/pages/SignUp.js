@@ -2,6 +2,13 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
+import { db } from '../firebase.config'
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth'
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -22,13 +29,42 @@ const SignUp = () => {
     }))
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const auth = getAuth()
+
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      )
+      const user = userCredentials.user
+
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      })
+
+      const formDataCopy = { ...formData }
+      delete formDataCopy.password
+      formDataCopy.timestamp = serverTimestamp()
+
+      await setDoc(doc(db, 'users', user.uid), formDataCopy)
+
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <div className='pageContainer'>
         <header>
           <p className='pageHeader'>Registration</p>
         </header>
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             type='text'
             className='nameInput'
