@@ -10,6 +10,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from 'firebase/auth'
+import OAuth from '../components/OAuth'
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -108,7 +109,7 @@ const SignUp = () => {
             </button>
           </div>
         </form>
-        {/* Google OAuth */}
+        <OAuth />
         <Link to='/sign-in' className='registerLink'>
           Sign In Instead
         </Link>
