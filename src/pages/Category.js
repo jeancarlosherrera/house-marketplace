@@ -75,7 +75,6 @@ const Category = () => {
                   listingItem={listing.data}
                   id={listing.id}
                 />
-                // <h3 key={listing.id}>{listing.data.name}</h3>
               ))}
             </ul>
           </main>
