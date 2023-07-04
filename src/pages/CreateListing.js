@@ -164,7 +164,7 @@ const CreateListing = () => {
             </div>
           </div>
 
-          <label className='formLabel'>Parking Spot</label>
+          <label className='formLabel'>Parking Spots</label>
           <div className='formButtons'>
             <button
               className={parking ? 'formButtonActive' : 'formButton'}
