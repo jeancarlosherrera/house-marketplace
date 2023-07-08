@@ -9,6 +9,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -84,13 +85,6 @@ const CreateListing = () => {
       return
     }
 
-    let geolocation = {}
-    let location
-
-    geolocation.lat = latitude
-    geolocation.lng = longitude
-    location = address
-
     //Store images in firebase
     const storeImage = async (image) => {
       return new Promise((resolve, reject) => {
@@ -136,9 +130,31 @@ const CreateListing = () => {
       return
     })
 
-    console.log(imgUrls)
+    //Prepare object to insert in database
+    let geolocation = {}
+    let location
 
+    geolocation.lat = latitude
+    geolocation.lng = longitude
+    location = address
+
+    const formDataToSave = {
+      ...formData,
+      imgUrls,
+      geolocation,
+      location,
+      timestamp: serverTimestamp(),
+    }
+
+    delete formDataToSave.images
+    delete formDataToSave.address
+    !formDataToSave.offer && delete formDataToSave.discountedPrice
+
+    //Insert in database
+    const docRef = await addDoc(collection(db, 'listings'), formDataToSave)
     setLoading(false)
+    toast.success('Listings saved')
+    navigate(`/category/${formDataToSave.type}/${docRef.id}`)
   }
 
   const onMutate = (e) => {
