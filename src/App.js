@@ -12,6 +12,7 @@ import PrivateRoute from './components/PrivateRoute'
 import Category from './pages/Category'
 import CreateListing from './pages/CreateListing'
 import Listing from './pages/Listing'
+import Contact from './pages/Contact'
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
             path='/category/:categoryName/:listingId'
             element={<Listing />}
           ></Route>
+          <Route path='/contact/:ownerId' element={<Contact />}></Route>
         </Routes>
         <Navbar />
       </Router>
