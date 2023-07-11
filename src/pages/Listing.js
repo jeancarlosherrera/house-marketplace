@@ -13,7 +13,6 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/a11y'
-
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y])
 
 const Listing = () => {
