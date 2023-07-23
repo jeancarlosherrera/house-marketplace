@@ -44,6 +44,10 @@ const Slider = () => {
     return <Spinner />
   }
 
+  if (listings.length === 0) {
+    return <></>
+  }
+
   const formatPrice = (price) =>
     price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
